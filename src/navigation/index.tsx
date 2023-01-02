@@ -1,13 +1,9 @@
 import * as React from 'react';
-import {View, Text, Button} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../types';
 import {RootState, useAppSelector} from '../store';
-import {LoginScreen, HomeScreen, FeesScreen} from '@app/screens';
+import {Home, Onboarding} from '@app/screens';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,18 +16,18 @@ function Navigation() {
 }
 
 const RootNavigator = () => {
-  const {isAuthenticated} = useAppSelector((state: RootState) => state.Auth);
+  const {isOnBoarding} = useAppSelector((state: RootState) => state.Auth);
 
-  if (!isAuthenticated) {
+  if (!isOnBoarding) {
     return (
       <Stack.Navigator>
         <Stack.Screen
           options={{
-            title: 'Login',
+            title: 'Onboarding',
             headerShown: false,
           }}
-          name="LoginScreen"
-          component={LoginScreen}
+          name="Onboarding"
+          component={Onboarding}
         />
       </Stack.Navigator>
     );
@@ -42,8 +38,7 @@ const RootNavigator = () => {
           headerShown: false,
         }}
         initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="FeesScreen" component={FeesScreen} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     );
   }
