@@ -1,4 +1,6 @@
 const Colors = {
+  primaryMain: '#E74779',
+  buttonStockColor: '#E6E7E8',
   BorderRgba: 'rgba(255, 255, 255, 0.1)',
   dark0: '#002040',
   dark1: '#002040',

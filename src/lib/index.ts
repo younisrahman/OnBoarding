@@ -7,4 +7,4 @@ export {
   wp,
 } from './ScreenDimensions';
 
-export {RFPercentage, RFValue} from './ResponsiveFont';
+export {RFValue} from './ResponsiveFont';
