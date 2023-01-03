@@ -1,11 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RadioButtonProps} from 'react-native-radio-buttons-group';
 
 export interface IState {
   isOnBoarding: boolean;
   user: {
     name: string;
     age: string;
-    gender: string;
+    gender: RadioButtonProps[];
   };
 }
 
@@ -18,7 +19,7 @@ const AuthSlice = createSlice({
     logout: () => initState,
     login: (state, action: PayloadAction<IState>) => {
       state.user = action.payload.user;
-      state.isOnBoarding = true;
+      state.isOnBoarding = action.payload.isOnBoarding;
     },
   },
 });

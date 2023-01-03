@@ -1,47 +1,69 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {RFValue} from '@app/lib/ResponsiveFont';
 import Colors from '@app/config/theme/Colors';
 import AppTextInput from '@app/components/TextInput';
 import AppButton from '@app/components/AppButton';
 import {hp} from '@app/lib/ScreenDimensions';
-import {logout} from '@app/features';
-import {RootState} from '@app/store/store';
+import {login} from '@app/features';
 
-const Home = () => {
-  const {user} = useSelector((state: RootState) => state.Auth);
-
+const Profile = () => {
   const dispatch = useDispatch();
-  const [name, setName] = useState(user.name);
-  const [age, setAge] = useState(user.age);
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
 
-  const [radioButtons, setRadioButtons] = useState<RadioButtonProps[]>(
-    user.gender,
-  );
+  const [radioButtons, setRadioButtons] = useState<RadioButtonProps[]>([
+    {
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: 'Female',
+      value: 'Female',
+      color: Colors.primaryMain,
+      labelStyle: {
+        fontSize: RFValue(12),
+        fontWeight: '500',
+      },
+    },
+    {
+      id: '2',
+      label: 'Male',
+      value: 'Male',
+      color: Colors.primaryMain,
+      labelStyle: {
+        fontSize: RFValue(12),
+        fontWeight: '500',
+      },
+    },
+  ]);
 
   function onPressRadioButton(radioButtonsArray: RadioButtonProps[]) {
     setRadioButtons(radioButtonsArray);
   }
   const submit = () => {
-    dispatch(logout());
+    const data = {
+      isOnBoarding: true,
+      user: {
+        name,
+        age,
+        gender: radioButtons,
+      },
+    };
+    dispatch(login(data));
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
         style={styles.image}
         source={require('../../assets/images/user.jpg')}
       />
-      <Text style={styles.title}>User Data</Text>
+      <Text style={styles.title}>Complete your profile</Text>
       <View style={styles.userInputsContainer}>
         <Text style={styles.inputTitle}>Name</Text>
         <AppTextInput
           placeholder="Enter your full name"
           setText={setName}
-          value={name}
-          editable={false}
           style={{alignSelf: 'center', marginBottom: hp(1)}}
         />
 
@@ -49,8 +71,6 @@ const Home = () => {
         <AppTextInput
           placeholder="Enter your full name"
           setText={setAge}
-          editable={false}
-          value={age}
           keyboardType="numeric"
           style={{alignSelf: 'center', marginBottom: hp(1)}}
         />
@@ -62,8 +82,8 @@ const Home = () => {
           onPress={onPressRadioButton}
         />
       </View>
-      <AppButton title="Clear" onPress={() => submit()} />
-    </View>
+      <AppButton title="Next" onPress={() => submit()} />
+    </ScrollView>
   );
 };
 
@@ -96,4 +116,4 @@ const styles = StyleSheet.create({
     marginBottom: hp(4),
   },
 });
-export default Home;
+export default Profile;

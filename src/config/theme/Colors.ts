@@ -1,6 +1,7 @@
 const Colors = {
   primaryMain: '#E74779',
   buttonStockColor: '#E6E7E8',
+  textInputBackground: '#F3F8FB',
   BorderRgba: 'rgba(255, 255, 255, 0.1)',
   dark0: '#002040',
   dark1: '#002040',
@@ -13,7 +14,6 @@ const Colors = {
   darkRgba2: 'rgba(0,0,0,.4)',
   darkRgba3: 'rgba(0,0,0,.3)',
   black: '#000',
-
   light0: '#ebebf0',
   light1: '#ebebf0',
   light2: '#f2f2f5',

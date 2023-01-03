@@ -6,8 +6,11 @@ import OnboardingCard from './OnboardingCard';
 import {Paginator, ButtonWithAnimation} from '@app/components';
 import data from './data';
 import Colors from '@app/config/theme/Colors';
+import AppButton from '@app/components/AppButton';
+import {hp} from '@app/lib/ScreenDimensions';
+import {OnboardingProps} from 'types';
 
-const Onboarding = () => {
+const Onboarding = ({navigation}: OnboardingProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const dataRef = useRef<any>(null);
@@ -22,9 +25,7 @@ const Onboarding = () => {
     if (currentIndex < data.length - 1) {
       dataRef.current.scrollToIndex({index: currentIndex + 1});
     } else {
-      console.log('====================================');
-      console.log('complete');
-      console.log('====================================');
+      navigation.navigate('Profile');
     }
   };
 
@@ -53,10 +54,18 @@ const Onboarding = () => {
       </View>
 
       <Paginator data={data} scrollX={scrollX} />
-      <ButtonWithAnimation
-        scrollTo={scrollTo}
-        percentage={(currentIndex + 1) * (100 / data.length)}
-      />
+      {currentIndex < 2 ? (
+        <ButtonWithAnimation
+          scrollTo={scrollTo}
+          percentage={(currentIndex + 1) * (100 / data.length)}
+        />
+      ) : (
+        <AppButton
+          title="Start"
+          style={{marginVertical: hp(8.5)}}
+          onPress={scrollTo}
+        />
+      )}
     </View>
   );
 };
